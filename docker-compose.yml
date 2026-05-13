@@ -14,13 +14,15 @@ services:
       - --http-addr=0.0.0.0:3002
       - --daemon-dir=/bitcoin
       - --electrum-rpc-addr=0.0.0.0:50001
+      # [강력 수정] 멤풀 백엔드를 위한 TCP 통신 및 트랜잭션 조회 500개 제한 무력화
+      - --electrum-txs-limit=100000
     volumes:
       - /root/electrs/data:/data
       - /root/myfork:/bitcoin:ro
 
   nginx:
     # SilverRuler님의 커스텀 이미지
-    image: silverruler/bitever-esplora-frontend:v1.1
+    image: silverruler/bitever-esplora-frontend:v1.3
     container_name: bitever-esplora-nginx
     restart: unless-stopped
     network_mode: host
